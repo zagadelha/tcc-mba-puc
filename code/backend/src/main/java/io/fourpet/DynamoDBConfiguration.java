@@ -20,12 +20,14 @@ public class DynamoDBConfiguration {
 
 	private AmazonDynamoDB buildConnection() {
 
+		String endPoint = "dynamodb.us-east-1.amazonaws.com";
+		String region = "us-east-1";
+		String userKey = System.getenv("AWS_USER_KEY");
+		String secretKey = System.getenv("AWS_SECRET_KEY");
+
 		return AmazonDynamoDBAsyncClientBuilder.standard()
-				.withEndpointConfiguration(
-						new AwsClientBuilder.EndpointConfiguration("dynamodb.us-east-1.amazonaws.com", "us-east-1"))
-				.withCredentials(new AWSStaticCredentialsProvider(
-						new BasicAWSCredentials("?", "?")))
-				.build();
+				.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, region))
+				.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(userKey, secretKey))).build();
 
 	}
 
