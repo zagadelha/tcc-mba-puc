@@ -1,14 +1,8 @@
-### Eclipse ###
 HELP.md
 target/
-.settings
-.classpath
-.project
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-**.bkp
-**.dtmp
 
 ### STS ###
 .apt_generated
