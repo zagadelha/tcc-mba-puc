@@ -11,10 +11,13 @@ public class FourPetApplication {
 	}
 
 	//TODO:
-	// 1. Menu hamburguer overlay
-	// 2. Implementar cadastro Google OAuth
-	// 3. Implemntar cadastro simples pelo app
-	// 4. Implementar cadastro do pet
-	// 5. Implementar Inicio vazia e com pet's cadastrados
+	// 1. Menu hamburguer overlay #DONE
+	// 2. Implementar cadastro simples pelo app #DONE
+	// 3. Configurar o Dynamo Spring Data #DONE
+	// 4. Implementar login simples  #DONE
+	// 5. Implementar cadastro Google OAuth #DOING
+	// 6. Implementar cadastro do pet
+	// 7. Implementar Inicio vazia e com pet's cadastrados
+
 
 }

@@ -1,43 +1,84 @@
 package io.fourpet.controller;
 
+import io.fourpet.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import io.fourpet.entity.UsuarioEntity;
-import io.fourpet.repository.UsuarioRepository;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
+
+@CrossOrigin
 @RestController
 public class UsuarioController {
 
-	@Autowired
-	private UsuarioRepository repository;
+    @Autowired
+    private UsuarioRepository repository;
 
-	@PostMapping("/usuario")
-	public UsuarioEntity save(@RequestBody UsuarioEntity usuario) {
-		return repository.save(usuario);
-	}
+    @PostMapping("/usuario")
+    public ResponseEntity<UsuarioEntity> save(@RequestBody UsuarioEntity usuario) {
 
-	@GetMapping("/usuario/{id}")
-	public UsuarioEntity get(@PathVariable("id") String usuarioId) {
-		return repository.getUsuarioById(usuarioId);
-	}
+        usuario.setAnunciante(false);
+        UsuarioEntity usuarioSalvo = repository.save(usuario);
 
-	@PutMapping("/usuario/{id}")
-	public String update(@PathVariable("id") String usuarioId, @RequestBody UsuarioEntity usuario) {
-		repository.update(usuarioId, usuario);
-		return "Usuario atualizado com sucesso!";
-	}
+        if (usuarioSalvo == null) {
+            return ResponseEntity.notFound().build();
+        } else {
 
-	@DeleteMapping("/usuario/{id}")
-	public String delete(@PathVariable("id") String usuarioId) {
-		repository.delete(usuarioId);
-		return "Usuario excluido com sucesso!";
-	}
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(usuarioSalvo.getId())
+                    .toUri();
+
+            return ResponseEntity.created(uri).body(usuarioSalvo);
+        }
+    }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<UsuarioEntity> get(@PathVariable("id") String usuarioId) {
+
+        UsuarioEntity usuario = repository.findById(usuarioId).get();
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(usuario);
+        }
+    }
+
+    @PutMapping("/usuario/{id}")
+    public ResponseEntity<UsuarioEntity> update(@PathVariable("id") String usuarioId, @RequestBody UsuarioEntity usuario) {
+
+        UsuarioEntity usuarioAtualizado = repository.save(usuario);
+        if (usuarioAtualizado == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(usuarioAtualizado);
+        }
+    }
+
+    @DeleteMapping("/usuario/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") String usuarioId) {
+
+        repository.deleteById(usuarioId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/login-simples")
+    public ResponseEntity<Boolean> entrarComCredenciais(@RequestBody UsuarioEntity usuario) {
+
+        UsuarioEntity usuarioDB = repository.findByEmail(usuario.getEmail());
+        if (usuarioDB != null && usuarioDB.getSenha().equals(usuario.getSenha())) {
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.ok(false);
+    }
+
+    @PostMapping("/login-google")
+    public boolean entrarComGoogle(@RequestBody UsuarioEntity usuario) {
+        //TODO: Implementar Google OAuth
+        return true;
+    }
 
 }
