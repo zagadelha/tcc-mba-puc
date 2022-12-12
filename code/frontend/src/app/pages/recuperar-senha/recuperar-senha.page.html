@@ -1,0 +1,15 @@
+<ion-content>
+  <img src="../../../assets/Logo.png" width="200" height="200" class="center">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Recuperar a senha</ion-card-subtitle>      
+    </ion-card-header>  
+    <ion-card-content>
+      <ion-item>        
+        <ion-label position="floating">Informe seu e-mail do cadastro</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>                
+      </ion-item>      
+      <ion-button (click)="login()" style="margin-top: 20px;" color="success" class="center">Recuperar</ion-button>    
+    </ion-card-content>
+  </ion-card>   
+</ion-content>

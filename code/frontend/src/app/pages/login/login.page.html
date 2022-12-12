@@ -1,0 +1,24 @@
+<ion-content>
+  <img src="../../../assets/Logo.png" width="200" height="200" class="center">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Já sou cadastrado</ion-card-subtitle>      
+    </ion-card-header>  
+    <ion-card-content>
+      <ion-item>        
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>                 
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input type="password" [(ngModel)]="senha"></ion-input>                
+      </ion-item>
+      <ion-button (click)="login()" style="margin-top: 20px;" color="success" class="center">Entrar</ion-button>    
+    </ion-card-content>
+  </ion-card> 
+  <img (click)="goHome()" src="../../../assets/icon/ico-google.png"  class="center" style="margin-top: 40px;">
+  <div style="margin-top: 40px; font-size: 12px;" class="center">    
+    <ion-router-link href="cadastro" style="color: darkcyan;" class="center">Novo usuário</ion-router-link>    
+    <ion-router-link href="recuperar-senha" style="color: darkcyan; margin-top: 20px;" class="center">Esqueci a senha</ion-router-link>        
+  </div>
+</ion-content>
